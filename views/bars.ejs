@@ -1,0 +1,41 @@
+<% include partials/header %>
+<!-- ______________________________________________________________________ -->
+
+
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h2>myPhilly Bars!</h2>
+            <p>View my favorite philly bars</p>
+            <p>
+                <a href="/bars/new" class="btn btn-primary btn-large">Add New Bar</a>
+            </p>
+        </div>
+    </header>
+</div>
+
+
+<h1>bars.ejs</h1>
+
+<a href="/bars/new">Add new Bar</a>
+
+<div class="row text-center" style="display:flex; flex-wrap:wrap;">
+    <% bars.forEach(function(bar){ %>
+        <div class="col-md-3 col-sm-6">
+            <div class="thumbnail">
+                <img src="<%= bar.image %>">
+                    <div class="caption">
+                        <h4><%= bar.name %></h4>
+                    </div>
+            </div>
+        </div>
+    <% }); %>
+</div>
+
+
+
+
+
+
+<!-- ______________________________________________________________________ -->
+<% include partials/footer %>
