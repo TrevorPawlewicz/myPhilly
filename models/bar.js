@@ -10,7 +10,9 @@ var barSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Comment"
         }
-    ]
+    ],
+    cost: String,
+    rating: String
 });
 // compile into a model:
 var Bar = mongoose.model("Bar", barSchema);

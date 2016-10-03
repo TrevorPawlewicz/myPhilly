@@ -39,6 +39,8 @@ app.post("/bars", function(req, res){
     var name = req.body.name; // taken from new.ejs FORM "name"
     var image = req.body.image; // taken from new.ejs FORM "image"
     var desc = req.body.description; //from new.ejs FORM "description"
+    //var cost = ;
+    //var rating = ;
     var newBar = {name: name, image: image, description: desc};
     // create a new bar and save to the database:
     Bar.create(newBar, function(err, newlyCreated){

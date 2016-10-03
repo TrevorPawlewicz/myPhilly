@@ -6,17 +6,23 @@ var data = [
     {
         name: "Dive Bar",
         image: "http://philadelphia.cities2night.com/public/article_images/129.jpg",
-        description: "Gettin' hammered!!!!!!!!!"
+        description: "Constituam consectetuer nec te. Quas appetere pericula ea cum, ea vis rebum soleat omnesque.",
+        cost: "$",
+        rating: "5"
     },
     {
         name: "Bigfoot Lodge",
         image: "http://www.imaginelifestyles.com/luxuryliving/wp-content/uploads/blog/files/u2/PetesSake.jpg",
-        description: "STILL Gettin' hammered!!!!!!!!!"
+        description: "Pri labitur nusquam no, usu ludus nobis utinam an. Vim id iudico temporibus, eum democritum moderatius id.",
+        cost: "$$$$",
+        rating: "7"
     },
     {
         name: "Paddy's Pub",
         image: "http://www.sitcomsonline.com/photopost/data/1315/its-always-sunny-in-philadelphia-paddy.jpg",
-        description: "...passing out..."
+        description: "Constituam consectetuer nec te. Quas appetere pericula ea cum, ea vis rebum soleat omnesque.Pri labitur nusquam no, usu ludus nobis utinam an. Vim id iudico temporibus, eum democritum moderatius id.",
+        cost: "$$",
+        rating: "10"
     }
 ];
 

@@ -1,29 +1,58 @@
 <% include ../partials/header %>
-<!-- ______________________________________________________________________ -->
-
-
-
-
+<!-- ______________________bars/show.ejs___________________________________ -->
 <p>show.ejs</p>
-<h1><%= bar.name %></h1>
 
-<img src="<%= bar.image%>"/>
 
-<p><%= bar.description %></p>
+<div class="container">
+    <!-- side bar begin -->
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">myPhilly</p>
+            <div class="list-group">
+                <li class="list-group-item active">Info 01</li>
+                <li class="list-group-item">Info 02</li>
+                <li class="list-group-item">Info 03</li>
+            </div>
+        </div>
+        <!-- side bar end -->
 
-<p>
-    <a href="/bars/<%= bar._id %>/comments/new" class="btn btn-success">
-        Add New Comment
-    </a>
-</p>
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <img class="img-responsive" src="<%= bar.image%>"/>
+                <div class="caption-full">
+                    <h5 class="pull-right">$$$$$</h5>
+                    <h3><a><%= bar.name %></a></h3>
+                    <p><%= bar.description %></p>
+                </div>
+            </div>
 
-<!-- comments start -->
-<% bar.comments.forEach(function(comment){ %>
-    <p>
-        <strong><%= comment.author %></strong> - <%= comment.text %>
-    </p>
-<% }); %>
-<!-- comments end -->
+            <div class="well">
+                <div class="text-right">
+                    <a href="/bars/<%= bar._id %>/comments/new" class="btn btn-success">
+                        Add New Comment
+                    </a>
+                </div>
+
+                <hr>
+                <!-- comments start -->
+                <% bar.comments.forEach(function(comment){ %>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <strong><%= comment.author %></strong>
+                            <span class="pull-right">10 days ago</span>
+                            <p>
+                                <%= comment.text %>
+                            </p>
+                        </div>
+                    </div>
+                <% }); %>
+                <!-- comments end -->
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 
 <!-- ______________________________________________________________________ -->
