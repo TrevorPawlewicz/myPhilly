@@ -3,19 +3,26 @@ var app        = express();
 var bodyParser = require("body-parser");
 var mongoose   = require("mongoose");
 
+//                        ./ = current directory
+var Bar        = require("./models/bar.js");
+//var Comment    = require("./model/comment.js");
+var seedDB     = require("./seeds.js");
+
+seedDB(); // call function to seed data
+
 mongoose.connect("mongodb://localhost/my_philly");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
 
-// SCHEMA SETUP:
-var barSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
-// complile into a model:
-var Bar = mongoose.model("Bar", barSchema);
+// // SCHEMA SETUP: ====== MOVED to model/bar.js
+// var barSchema = new mongoose.Schema({
+//     name: String,
+//     image: String,
+//     description: String
+// });
+// // complile into a model:
+// var Bar = mongoose.model("Bar", barSchema);
 
 // // temp: -------------------------------------------------------------------
 // Bar.create({
