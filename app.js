@@ -12,6 +12,8 @@ var seedDB     = require("./seeds.js");
 mongoose.connect("mongodb://localhost/my_philly");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
+// __dirname is the directory the app.js live in
+app.use(express.static(__dirname + "/public")); //points Express to public folder
 
 seedDB(); // call function to seed data
 

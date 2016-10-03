@@ -1,0 +1,17 @@
+body {
+    /*font-family: 'Quicksand', sans-serif;*/
+    font-family: 'Varela Round', sans-serif;
+    /*font-family: 'Bangers', cursive;*/
+    /*font-family: 'Monoton', cursive;*/
+    /*                            top     bottom */
+    background: linear-gradient(#7FFF00, #00FFFF);
+}
+.thumbnail img {
+    width: 100%;
+}
+.thumbnail {
+    padding: 0;
+}
+.thumbnail .caption-full {
+    padding: 8px;
+}
