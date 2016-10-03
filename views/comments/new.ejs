@@ -1,26 +1,26 @@
-<% include partials/header %>
+<% include ../partials/header %>
 <!-- ______________________________________________________________________ -->
 
-
+<h1>Comments - new.ejs</h1>
 
 <div class="container">
     <div class="row">
-        <h1 style="text-align: center;">Create a New Bar</h1>
+        <h1 style="text-align: center;">Add new comment to <%= bar.name %></h1>
 
         <div style="width:30%; margin: 30px auto;">
-            <form action="/bars" method="POST">
+            <form action="/bars/<%= bar._id %>/comments" method="POST">
+
                 <div class="form-group">
-                    <input class="form-control" type="text" name="name" placeholder="name">
+                    <input class="form-control" type="text" name="comment[text]" placeholder="text">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="image" placeholder="image url">
+                    <input class="form-control" type="text" name="comment[author]" placeholder="author">
                 </div>
-                <div class="form-group">
-                    <input class="form-control" type="text" name="description" placeholder="description">
-                </div>
+
                 <div class="form-group">
                     <button class="btn btn-lg btn-primary btn-block">Submit</button>
                 </div>
+
             </form>
 
             <a href="/bars">Go Back</a>
@@ -32,4 +32,4 @@
 
 
 <!-- ______________________________________________________________________ -->
-<% include partials/footer %>
+<% include ../partials/footer %>

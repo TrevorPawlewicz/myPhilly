@@ -1,4 +1,4 @@
-<% include partials/header %>
+<% include ../partials/header %>
 <!-- ______________________________________________________________________ -->
 
 
@@ -13,14 +13,14 @@
 
 
 
-
+<!-- comments start -->
 <% bar.comments.forEach(function(comment){ %>
     <p>
         <strong><%= comment.author %></strong> - <%= comment.text %>
     </p>
 <% }); %>
-
+<!-- comments end -->
 
 
 <!-- ______________________________________________________________________ -->
-<% include partials/footer %>
+<% include ../partials/footer %>

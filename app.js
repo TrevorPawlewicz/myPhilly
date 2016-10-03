@@ -27,8 +27,8 @@ app.get("/bars", function(req, res){
         if (err) {
             console.log(err);
         } else {
-            //          {name we give it: data pased in}
-            res.render("index.ejs", {bars: allBarsFound});
+            //                {name we give it: data pased in}
+            res.render("bars/index.ejs", {bars: allBarsFound});
         }
     });
 }); //-------------------------------------------------------------------------
@@ -52,7 +52,7 @@ app.post("/bars", function(req, res){
 
 // NEW: show the form to create a new bar
 app.get("/bars/new", function(req, res){
-    res.render("new.ejs");
+    res.render("bars/new.ejs");
 }); //-------------------------------------------------------------------------
 
 // SHOW: info of bar by ID
@@ -63,16 +63,25 @@ app.get("/bars/:id", function(req, res){
             console.log(err);
         } else {
             // render show template with that bar data:
-            res.render("show.ejs", {bar: foundBar});
+            res.render("bars/show.ejs", {bar: foundBar});
         }
     });
 });
 
 
+// ============================================================================
+// COMMENT ROUTES
+//---------------
 
-
-
-
+app.get("/bars/:id/comments/new", function(req, res){
+    Bar.findById(req,params.id, function(err, bar){
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("comments/new.ejs");
+        }
+    });
+});
 
 
 
@@ -81,6 +90,6 @@ app.get("/bars/:id", function(req, res){
 // SERVER
 var port = process.env.PORT || 3000;
 app.listen(port, process.env.IP, function() {
-    console.log("----> Server has started on port: " + port);
+    console.log("----> myPhilly Server has started on port: " + port);
 });
 //=============================================================================
