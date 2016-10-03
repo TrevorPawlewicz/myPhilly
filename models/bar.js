@@ -4,9 +4,15 @@ var mongoose = require("mongoose");
 var barSchema = new mongoose.Schema({
     name: String,
     image: String,
-    description: String
+    description: String,
+    comments: [
+        {   // associate comments with bar
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Comment"
+        }
+    ]
 });
-// complile into a model:
+// compile into a model:
 var Bar = mongoose.model("Bar", barSchema);
 
 // export the model:

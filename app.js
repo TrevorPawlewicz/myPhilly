@@ -5,45 +5,15 @@ var mongoose   = require("mongoose");
 
 //                        ./ = current directory
 var Bar        = require("./models/bar.js");
-//var Comment    = require("./model/comment.js");
+var Comment    = require("./models/comment.js");
 var seedDB     = require("./seeds.js");
 
-seedDB(); // call function to seed data
 
 mongoose.connect("mongodb://localhost/my_philly");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
-
-// // SCHEMA SETUP: ====== MOVED to model/bar.js
-// var barSchema = new mongoose.Schema({
-//     name: String,
-//     image: String,
-//     description: String
-// });
-// // complile into a model:
-// var Bar = mongoose.model("Bar", barSchema);
-
-// // temp: -------------------------------------------------------------------
-// Bar.create({
-//     name: "Dive Bar",
-//     image: "http://philadelphia.cities2night.com/public/article_images/129.jpg",
-//     description: "get hammered!!!!"
-// }, function(err, bar){
-//     if (err) {
-//         console.log("====> Error: " + err);
-//     } else {
-//         console.log("====> NEW BAR CREATED:");
-//         console.log(bar);
-//     }
-// });
-
-// var bars = [
-//     {name: "Bigfoot Lodge", image: "http://www.imaginelifestyles.com/luxuryliving/wp-content/uploads/blog/files/u2/PetesSake.jpg"},
-//     {name: "Dive Bar", image: "http://philadelphia.cities2night.com/public/article_images/129.jpg"},
-//     {name: "Paddy's Pub", image: "http://www.sitcomsonline.com/photopost/data/1315/its-always-sunny-in-philadelphia-paddy.jpg"}
-// ];
-//-----------------------------------------------------------------------------
+seedDB(); // call function to seed data
 
 // ROUTES:
 app.get("/", function(req, res){
@@ -88,10 +58,11 @@ app.get("/bars/new", function(req, res){
 // SHOW: info of bar by ID
 app.get("/bars/:id", function(req, res){
     // find bar witgh ID:
-    Bar.findById(req.params.id, function(err, foundBar){
+    Bar.findById(req.params.id).populate("comments").exec(function(err, foundBar){
         if (err) {
             console.log(err);
         } else {
+            // render show template with that bar data:
             res.render("show.ejs", {bar: foundBar});
         }
     });
