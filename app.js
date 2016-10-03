@@ -74,16 +74,35 @@ app.get("/bars/:id", function(req, res){
 //---------------
 
 app.get("/bars/:id/comments/new", function(req, res){
-    Bar.findById(req,params.id, function(err, bar){
+    Bar.findById(req.params.id, function(err, bar){
         if (err) {
             console.log(err);
         } else {
-            res.render("comments/new.ejs");
+            //                 pass data to the form
+            res.render("comments/new.ejs", {bar: bar});
         }
     });
 });
 
-
+app.post("/bars/:id/comments", function(req, res){
+    Bar.findById(req.params.id, function(err, bar){
+        if (err) {
+            console.log(err);
+            res.redirect("/bars");
+        } else {
+            Comment.create(req.body.comment, function(err, comment){
+                if (err) {
+                    console.log(err);
+                } else {
+                    //console.log("comment = " + comment);
+                    bar.comments.push(comment);
+                    bar.save();
+                    res.redirect("/bars/" + bar._id);
+                }
+            });
+        }
+    });
+});
 
 
 //=============================================================================
