@@ -26,13 +26,16 @@
         <div class="col-md-3 col-sm-6">
             <div class="thumbnail">
                 <img src="<%= bar.image %>">
-                    <div class="caption">
-                        <h4><%= bar.name %></h4>
-                    </div>
+                <div class="caption">
+                    <h4><%= bar.name %></h4>
+                </div>
+                <p>
+                    <a href="/bars/<%= bar._id %>" class="btn btn-primary">More Info</a>
+                </p>
             </div>
         </div>
     <% }); %>
-    
+
 </div>
 
 

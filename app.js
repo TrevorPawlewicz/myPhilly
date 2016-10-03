@@ -11,15 +11,17 @@ app.set("view engine", "ejs");
 // SCHEMA SETUP:
 var barSchema = new mongoose.Schema({
     name: String,
-    image: String
+    image: String,
+    description: String
 });
 // complile into a model:
 var Bar = mongoose.model("Bar", barSchema);
 
-// // temp:
+// // temp: -------------------------------------------------------------------
 // Bar.create({
 //     name: "Dive Bar",
-//     image: "http://philadelphia.cities2night.com/public/article_images/129.jpg"
+//     image: "http://philadelphia.cities2night.com/public/article_images/129.jpg",
+//     description: "get hammered!!!!"
 // }, function(err, bar){
 //     if (err) {
 //         console.log("====> Error: " + err);
@@ -34,13 +36,14 @@ var Bar = mongoose.model("Bar", barSchema);
 //     {name: "Dive Bar", image: "http://philadelphia.cities2night.com/public/article_images/129.jpg"},
 //     {name: "Paddy's Pub", image: "http://www.sitcomsonline.com/photopost/data/1315/its-always-sunny-in-philadelphia-paddy.jpg"}
 // ];
-
+//-----------------------------------------------------------------------------
 
 // ROUTES:
 app.get("/", function(req, res){
     res.render("landing.ejs");
-});
-// show ALL bars
+}); //-------------------------------------------------------------------------
+
+// INDEX: show ALL bars
 app.get("/bars", function(req, res){
     // get all bars from database:
     Bar.find({}, function(err, allBarsFound){
@@ -48,18 +51,18 @@ app.get("/bars", function(req, res){
             console.log(err);
         } else {
             //          {name we give it: data pased in}
-            res.render("bars.ejs", {bars: allBarsFound});
+            res.render("index.ejs", {bars: allBarsFound});
         }
     });
-});
+}); //-------------------------------------------------------------------------
 
-
+// CREATE:
 app.post("/bars", function(req, res){
     // get data from FORM...
     var name = req.body.name; // taken from new.ejs FORM "name"
     var image = req.body.image; // taken from new.ejs FORM "image"
-
-    var newBar = {name: name, image: image};
+    var desc = req.body.description; //from new.ejs FORM "description"
+    var newBar = {name: name, image: image, description: desc};
     // create a new bar and save to the database:
     Bar.create(newBar, function(err, newlyCreated){
         if (err) {
@@ -68,11 +71,23 @@ app.post("/bars", function(req, res){
             res.redirect("/bars"); // to GET '/bars' route
         }
     });
-});
+}); //-------------------------------------------------------------------------
 
-// show the form
+// NEW: show the form to create a new bar
 app.get("/bars/new", function(req, res){
     res.render("new.ejs");
+}); //-------------------------------------------------------------------------
+
+// SHOW: info of bar by ID
+app.get("/bars/:id", function(req, res){
+    // find bar witgh ID:
+    Bar.findById(req.params.id, function(err, foundBar){
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("show.ejs", {bar: foundBar});
+        }
+    });
 });
 
 
@@ -84,12 +99,10 @@ app.get("/bars/new", function(req, res){
 
 
 
-
-
-
-
-// server
+//=============================================================================
+// SERVER
 var port = process.env.PORT || 3000;
 app.listen(port, process.env.IP, function() {
     console.log("----> Server has started on port: " + port);
 });
+//=============================================================================
