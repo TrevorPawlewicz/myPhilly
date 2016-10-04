@@ -5,7 +5,7 @@ var mongoose      = require("mongoose");
 var passport      = require("passport");
 var LocalStrategy = require("passport-local");
 
-//                        ./ = current directory
+//                           ./ = current directory
 var Bar           = require("./models/bar.js");
 var Comment       = require("./models/comment.js");
 var User          = require("./models/user.js");
@@ -19,6 +19,20 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public")); //points Express to public folder
 
 seedDB(); // call function to seed data
+
+// PASSPORT Config: -----------------------------------------------------------
+app.use(require("express-session")({
+    secret: "Everybody wants some!",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+//-----------------------------------------------------------------------------
+
 
 // ROUTES:
 app.get("/", function(req, res){
@@ -110,6 +124,67 @@ app.post("/bars/:id/comments", function(req, res){
         }
     });
 });
+
+// ============================================================================
+// AUTH ROUTES
+//---------------
+
+// SHOW (GET) the form
+app.get("/register", function(req, res){
+    res.render("register");
+});
+
+// handle (POST) Sign Up logic:
+app.post("/register", function(req, res){
+    var newUser = new User({username: req.body.username});
+    User.register(newUser, req.body.password, function(err, thisUser){
+        if (err) {
+            console.log(err);
+            res.render("register.ejs");
+        } else {
+            passport.authenticate("local")(req, res, function(){
+                res.redirect("/bars");
+            });
+        }
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //=============================================================================
