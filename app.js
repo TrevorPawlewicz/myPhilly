@@ -1,12 +1,15 @@
-var express    = require("express");
-var app        = express();
-var bodyParser = require("body-parser");
-var mongoose   = require("mongoose");
+var express       = require("express");
+var app           = express();
+var bodyParser    = require("body-parser");
+var mongoose      = require("mongoose");
+var passport      = require("passport");
+var LocalStrategy = require("passport-local");
 
 //                        ./ = current directory
-var Bar        = require("./models/bar.js");
-var Comment    = require("./models/comment.js");
-var seedDB     = require("./seeds.js");
+var Bar           = require("./models/bar.js");
+var Comment       = require("./models/comment.js");
+var User          = require("./models/user.js");
+var seedDB        = require("./seeds.js");
 
 
 mongoose.connect("mongodb://localhost/my_philly");
