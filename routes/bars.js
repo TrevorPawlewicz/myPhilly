@@ -61,7 +61,7 @@ router.get("/:id", function(req, res){
     });
 }); //-------------------------------------------------------------------------
 
-// EDIT
+// EDIT by ID
 router.get("/:id/edit", function(req, res){
     Bar.findById(req.params.id, function(err, foundBar){
         if (err) {
@@ -73,7 +73,7 @@ router.get("/:id/edit", function(req, res){
     });
 });
 
-// UPDATE
+// UPDATE by ID
 router.put("/:id", function(req, res){
 
     Bar.findByIdAndUpdate(req.params.id, req.body.bar, function(err, foundBar){
@@ -82,6 +82,18 @@ router.put("/:id", function(req, res){
             res.redirect("/bars");
         } else {
             res.redirect("/bars/" + req.params.id);
+        }
+    });
+});
+
+// DESTROY by ID
+router.delete("/:id", function(req, res){
+    Bar.findByIdAndRemove(req.params.id, function(err){
+        if (err) {
+            console.log(err);
+            res.redirect("/bars");
+        } else {
+            res.redirect("/bars");
         }
     });
 });
