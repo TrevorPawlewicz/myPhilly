@@ -62,20 +62,15 @@ router.get("/:id", function(req, res){
 }); //-------------------------------------------------------------------------
 
 // EDIT by ID
-router.get("/:id/edit", function(req, res){
+router.get("/:id/edit", checkBarOwnership, function(req, res){
+    // checkBarOwnership MIDDLEWARE is checked THEN:
     Bar.findById(req.params.id, function(err, foundBar){
-        if (err) {
-            console.log(err);
-            res.redirect("/bars");
-        } else {
-            res.render("bars/edit.ejs", { bar: foundBar });
-        }
+        res.render("bars/edit.ejs", { bar: foundBar });
     });
-});
+}); //-------------------------------------------------------------------------
 
 // UPDATE by ID
 router.put("/:id", function(req, res){
-
     Bar.findByIdAndUpdate(req.params.id, req.body.bar, function(err, foundBar){
         if (err) {
             console.log(err);
@@ -84,7 +79,7 @@ router.put("/:id", function(req, res){
             res.redirect("/bars/" + req.params.id);
         }
     });
-});
+}); //-------------------------------------------------------------------------
 
 // DESTROY by ID
 router.delete("/:id", function(req, res){
@@ -96,15 +91,39 @@ router.delete("/:id", function(req, res){
             res.redirect("/bars");
         }
     });
-});
+}); //-------------------------------------------------------------------------
 
 // our MIDDLEWARE functions ---------------------------------------------------
-function isLoggedIn(req, res, next){
+function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) { return next(); }
 
     res.redirect("/login");
 }; //--------------------------------------------------------------------------
+function checkBarOwnership(req, res, next) {
+    // is user logged in?
+    if (req.isAuthenticated()) {
+        Bar.findById(req.params.id, function(err, foundBar){
+            if (err) {
+                console.log(err);
+                res.redirect("back"); // previous page
+            } else {
+                // does user own bar post? compare:
+                console.log(foundBar.author.id); // mongoose object
+                console.log(req.user._id); // string
 
+                if (foundBar.author.id.equals(req.user._id)) {
+                    //res.render("bars/edit.ejs", { bar: foundBar });
+                    next();
+                } else {
+                    res.redirect("back"); // previous page
+                }
+            }
+        });
+    } else {
+        console.log("checkBarOwnership() - YOU NEED TO BE LOGGED IN TO DO THAT!");
+        res.redirect("back"); // previous page
+    }
+};
 
 
 //-----------------------------------------------------------------------------
