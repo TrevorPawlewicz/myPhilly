@@ -61,7 +61,30 @@ router.get("/:id", function(req, res){
     });
 }); //-------------------------------------------------------------------------
 
+// EDIT
+router.get("/:id/edit", function(req, res){
+    Bar.findById(req.params.id, function(err, foundBar){
+        if (err) {
+            console.log(err);
+            res.redirect("/bars");
+        } else {
+            res.render("bars/edit.ejs", { bar: foundBar });
+        }
+    });
+});
 
+// UPDATE
+router.put("/:id", function(req, res){
+
+    Bar.findByIdAndUpdate(req.params.id, req.body.bar, function(err, foundBar){
+        if (err) {
+            console.log(err);
+            res.redirect("/bars");
+        } else {
+            res.redirect("/bars/" + req.params.id);
+        }
+    });
+});
 
 // our MIDDLEWARE functions ---------------------------------------------------
 function isLoggedIn(req, res, next){

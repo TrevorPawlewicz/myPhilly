@@ -1,14 +1,16 @@
-var express       = require("express");
-var app           = express();
-var bodyParser    = require("body-parser");
-var mongoose      = require("mongoose");
-var passport      = require("passport");
-var LocalStrategy = require("passport-local");
+var express        = require("express");
+var app            = express();
+var bodyParser     = require("body-parser");
+var mongoose       = require("mongoose");
+var passport       = require("passport");
+var LocalStrategy  = require("passport-local");
+var methodOverride = require("method-override");
 
 //  Schemas                  ./ = current directory
 var Bar           = require("./models/bar.js");
 var Comment       = require("./models/comment.js");
 var User          = require("./models/user.js");
+
 var seedDB        = require("./seeds.js");
 
 // ROUTES - require the files, then app.use them below
@@ -23,6 +25,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 // __dirname is the directory the app.js live in
 app.use(express.static(__dirname + "/public")); //points Express to public folder
+app.use(methodOverride("_method"));
 
 //seedDB(); // call function to seed data
 
