@@ -93,8 +93,8 @@ app.get("/bars/:id", function(req, res){
 // ============================================================================
 // COMMENT ROUTES
 //---------------
-
-app.get("/bars/:id/comments/new", function(req, res){
+// (GET)                          MIDDLEWARE
+app.get("/bars/:id/comments/new", isLoggedIn, function(req, res){
     Bar.findById(req.params.id, function(err, bar){
         if (err) {
             console.log(err);
@@ -105,7 +105,8 @@ app.get("/bars/:id/comments/new", function(req, res){
     });
 });
 
-app.post("/bars/:id/comments", function(req, res){
+// POST comment                MIDDLEWARE
+app.post("/bars/:id/comments", isLoggedIn, function(req, res){
     Bar.findById(req.params.id, function(err, bar){
         if (err) {
             console.log(err);
@@ -163,37 +164,25 @@ app.post("/login", passport.authenticate("local",
     }),
     function(req, res){
         // not really needed
-});
+}); //------------------------------------------------------------------------
 
 
 
 
+// (GET) Logout logic
+app.get("/logout", function(req, res){
+    req.logout();
+    //res.redirect("/");
+    res.redirect("/bars");
+}); //------------------------------------------------------------------------
 
 
+// our MIDDLEWARE functions
+function isLoggedIn(req, res, next){
+    if (req.isAuthenticated()) { return next(); }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    res.redirect("/login");
+};
 
 
 
