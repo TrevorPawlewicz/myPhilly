@@ -131,7 +131,7 @@ app.post("/bars/:id/comments", function(req, res){
 
 // SHOW (GET) the form
 app.get("/register", function(req, res){
-    res.render("register");
+    res.render("register.ejs");
 });
 
 // handle (POST) Sign Up logic:
@@ -147,12 +147,23 @@ app.post("/register", function(req, res){
             });
         }
     });
+}); //-------------------------------------------------------------------------
+
+
+// SHOW (GET) Login form:
+app.get("/login", function(req, res){
+    res.render("login.ejs");
 });
 
-
-
-
-
+// handle (POST) Login with "passport-local-mongoose" MIDDLEWARE:
+app.post("/login", passport.authenticate("local",
+    {   // user is assumed to exist
+        successRedirect: "/bars",
+        failureRedirect: "/login"
+    }),
+    function(req, res){
+        // not really needed
+});
 
 
 
