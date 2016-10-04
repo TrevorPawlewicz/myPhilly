@@ -33,6 +33,12 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 //-----------------------------------------------------------------------------
 
+// our MIDDLEWARE for ALL routes:
+app.use(function(req, res, next){
+    // res.locals = available in ALL our ejs templates
+    res.locals.currentUser = req.user;
+    next(); // needed to move out of MIDDLEWARE
+});
 
 // ROUTES:
 app.get("/", function(req, res){
@@ -46,8 +52,8 @@ app.get("/bars", function(req, res){
         if (err) {
             console.log(err);
         } else {
-            //                {name we give it: data pased in}
-            res.render("bars/index.ejs", {bars: allBarsFound});
+            //                 {name we give it: data pased in}
+            res.render("bars/index.ejs", { bars: allBarsFound });
         }
     });
 }); //-------------------------------------------------------------------------
