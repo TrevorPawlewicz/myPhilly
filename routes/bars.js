@@ -18,16 +18,23 @@ router.get("/", function(req, res){
 }); //-------------------------------------------------------------------------
 
 // CREATE:
-router.post("/", function(req, res){
-    // get data from FORM...
-    var name = req.body.name; // taken from new.ejs FORM "name"
-    var image = req.body.image; // taken from new.ejs FORM "image"
+router.post("/", isLoggedIn, function(req, res){
+    // get data from FORM: req.body
+    var name = req.body.name; // from new.ejs FORM "name"
+    var image = req.body.image; // from new.ejs FORM "image"
     var desc = req.body.description; //from new.ejs FORM "description"
+    var author = {
+        id: req.user._id,
+        username: req.user.username
+    };
     //var cost = ;
     //var rating = ;
-    var newBar = {name: name, image: image, description: desc};
+
+    var newBar = {name: name, image: image, description: desc, author: author};
+
     // create a new bar and save to the database:
     Bar.create(newBar, function(err, newlyCreated){
+        console.log("newlyCreated = " + newlyCreated);
         if (err) {
             console.log(err);
         } else {
@@ -37,7 +44,7 @@ router.post("/", function(req, res){
 }); //-------------------------------------------------------------------------
 
 // NEW: show the form to create a new bar
-router.get("/new", function(req, res){
+router.get("/new", isLoggedIn, function(req, res){
     res.render("bars/new.ejs");
 }); //-------------------------------------------------------------------------
 
@@ -53,6 +60,17 @@ router.get("/:id", function(req, res){
         }
     });
 }); //-------------------------------------------------------------------------
+
+
+
+// our MIDDLEWARE functions ---------------------------------------------------
+function isLoggedIn(req, res, next){
+    if (req.isAuthenticated()) { return next(); }
+
+    res.redirect("/login");
+}; //--------------------------------------------------------------------------
+
+
 
 //-----------------------------------------------------------------------------
 // export (return) our router for app.js import

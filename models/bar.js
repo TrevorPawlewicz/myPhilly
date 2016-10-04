@@ -5,6 +5,13 @@ var barSchema = new mongoose.Schema({
     name: String,
     image: String,
     description: String,
+    author: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
+        username: String
+    },
     comments: [
         {   // associate comments with bar
             type: mongoose.Schema.Types.ObjectId,
