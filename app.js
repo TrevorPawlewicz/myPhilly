@@ -24,7 +24,7 @@ app.set("view engine", "ejs");
 // __dirname is the directory the app.js live in
 app.use(express.static(__dirname + "/public")); //points Express to public folder
 
-seedDB(); // call function to seed data
+//seedDB(); // call function to seed data
 
 // PASSPORT Config: -----------------------------------------------------------
 app.use(require("express-session")({

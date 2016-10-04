@@ -6,13 +6,13 @@ var Comment = require("../models/comment.js"); // include the model schema
 // ============================================================================
 // COMMENT ROUTES
 //---------------
-// NEW (GET)                          MIDDLEWARE
+// NEW (GET)                         MIDDLEWARE
 router.get("/bars/:id/comments/new", isLoggedIn, function(req, res){
     Bar.findById(req.params.id, function(err, bar){
         if (err) {
             console.log(err);
         } else {
-            //                 pass data to the form
+            //             pass data to the form -v-
             res.render("comments/new.ejs", {bar: bar});
         }
     });
@@ -29,9 +29,12 @@ router.post("/bars/:id/comments", isLoggedIn, function(req, res){
                 if (err) {
                     console.log(err);
                 } else {
-                    //console.log("comment = " + comment);
+                    comment.author.id = req.user._id;
+                    comment.author.username = req.user.username;
+                    comment.save();
                     bar.comments.push(comment);
                     bar.save();
+                    console.log("---> comment = " + comment);
                     res.redirect("/bars/" + bar._id);
                 }
             });
