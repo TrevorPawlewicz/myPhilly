@@ -27,11 +27,15 @@
                         <strong><em><%= bar.author.username %></em></strong>
                     </p>
 
-                    <a href="/bars/<%= bar.id %>/edit" class="btn btn-warning btn-sm">Edit</a>
-                    <!--                                       method-override -->
-                    <form id="delete-form" action="/bars/<%= bar._id %>?_method=DELETE" method="POST">
-                        <button class="btn btn-danger btn-sm">Delete</button>
-                    </form>
+                    <!-- ___________EDIT and DELETE buttons________________ -->
+                    <% if (currentUser && bar.author.id.equals(currentUser._id)) { %>
+                        <a href="/bars/<%= bar.id %>/edit" class="btn btn-warning btn-sm">Edit</a>
+
+                        <form id="delete-form" action="/bars/<%= bar._id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    <% } %>
+                    <!-- ___________EDIT and DELETE buttons________________ -->
                 </div>
             </div>
 

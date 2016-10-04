@@ -70,7 +70,7 @@ router.get("/:id/edit", checkBarOwnership, function(req, res){
 }); //-------------------------------------------------------------------------
 
 // UPDATE by ID
-router.put("/:id", function(req, res){
+router.put("/:id", checkBarOwnership, function(req, res){
     Bar.findByIdAndUpdate(req.params.id, req.body.bar, function(err, foundBar){
         if (err) {
             console.log(err);
@@ -82,7 +82,7 @@ router.put("/:id", function(req, res){
 }); //-------------------------------------------------------------------------
 
 // DESTROY by ID
-router.delete("/:id", function(req, res){
+router.delete("/:id", checkBarOwnership, function(req, res){
     Bar.findByIdAndRemove(req.params.id, function(err){
         if (err) {
             console.log(err);
@@ -93,12 +93,15 @@ router.delete("/:id", function(req, res){
     });
 }); //-------------------------------------------------------------------------
 
+
+//=============================================================================
 // our MIDDLEWARE functions ---------------------------------------------------
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) { return next(); }
 
     res.redirect("/login");
 }; //--------------------------------------------------------------------------
+
 function checkBarOwnership(req, res, next) {
     // is user logged in?
     if (req.isAuthenticated()) {
@@ -124,7 +127,7 @@ function checkBarOwnership(req, res, next) {
         res.redirect("back"); // previous page
     }
 };
-
+//=============================================================================
 
 //-----------------------------------------------------------------------------
 // export (return) our router for app.js import
