@@ -8,11 +8,10 @@ middlewareObject.isLoggedIn = function(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    //  flash( key,      value) to be passed       
-    req.flash("error", "Please Login First!");
+    //  flash( key,      value) to be passed
+    req.flash("error", "You Need To Be Logged In To Do That!");
     res.redirect("/login");
 }; //--------------------------------------------------------------------------
-
 
 
 middlewareObject.checkBarOwnership = function(req, res, next) {
@@ -21,6 +20,7 @@ middlewareObject.checkBarOwnership = function(req, res, next) {
         Bar.findById(req.params.id, function(err, foundBar){
             if (err) {
                 console.log(err);
+                req.flash("error", "Whaaaaa? Bar not Found!");
                 res.redirect("back"); // previous page
             } else {
                 // does user own bar post? compare:
@@ -28,7 +28,7 @@ middlewareObject.checkBarOwnership = function(req, res, next) {
                 console.log("req.user._id = " + req.user._id); // string
 
                 if (foundBar.author.id.equals(req.user._id)) {
-                    //res.render("bars/edit.ejs", { bar: foundBar });
+                    req.flash("error", "You Do Not Have Permission To Do That, Son!");
                     next();
                 } else {
                     res.redirect("back"); // previous page
@@ -36,11 +36,10 @@ middlewareObject.checkBarOwnership = function(req, res, next) {
             }
         });
     } else {
-        console.log("checkBarOwnership() - YOU NEED TO BE LOGGED IN TO DO THAT!");
+        req.flash("error", "You Need To Be Logged In To Do That!");
         res.redirect("back"); // previous page
     }
 }; //--------------------------------------------------------------------------
-
 
 
 middlewareObject.checkCommentOwnership = function(req, res, next) {
@@ -49,6 +48,7 @@ middlewareObject.checkCommentOwnership = function(req, res, next) {
         Comment.findById(req.params.comment_id, function(err, foundComment){
             if (err) {
                 console.log(err);
+                req.flash("error", "Whaaaaa? Comment not Found!");
                 res.redirect("back"); // previous page
             } else {
                 // does user own bar post? compare:
@@ -56,7 +56,7 @@ middlewareObject.checkCommentOwnership = function(req, res, next) {
                 console.log(req.user._id); // string
 
                 if (foundComment.author.id.equals(req.user._id)) {
-                    //res.render("bars/edit.ejs", { bar: foundBar });
+                    req.flash("error", "You Do Not Have Permission To Do That, Son!");
                     next();
                 } else {
                     res.redirect("back"); // previous page
@@ -64,11 +64,10 @@ middlewareObject.checkCommentOwnership = function(req, res, next) {
             }
         });
     } else {
-        console.log("checkCommentOwnership() - YOU NEED TO BE LOGGED IN TO DO THAT!");
+        req.flash("error", "You Need To Be Logged In To Do That!");
         res.redirect("back"); // previous page
     }
 }; //--------------------------------------------------------------------------
-
 
 
 // export the middleware function object:

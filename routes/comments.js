@@ -2,7 +2,7 @@ var express    = require("express");
 var router     = express.Router({mergeParams: true}); //bars + comments get merged
 var Bar        = require("../models/bar.js"); // include the model schema
 var Comment    = require("../models/comment.js"); // include the model schema
-var middleware = require("../middleware/index.js"); // include our MIDDLEWARE
+var middleware = require("../middleware/middleware.js"); // include our MIDDLEWARE
 
 // ============================================================================
 // COMMENT ROUTES
@@ -19,6 +19,7 @@ router.get("/bars/:id/comments/new", middleware.isLoggedIn, function(req, res){
     });
 }); //-------------------------------------------------------------------------
 
+
 // CREATE (POST) comment          MIDDLEWARE
 router.post("/bars/:id/comments", middleware.isLoggedIn, function(req, res){
     Bar.findById(req.params.id, function(err, bar){
@@ -28,6 +29,7 @@ router.post("/bars/:id/comments", middleware.isLoggedIn, function(req, res){
         } else {
             Comment.create(req.body.comment, function(err, comment){
                 if (err) {
+
                     console.log(err);
                 } else {
                     comment.author.id = req.user._id;
@@ -55,6 +57,7 @@ router.get("/bars/:id/comments/:comment_id/edit", middleware.checkCommentOwnersh
     });
 }); //-------------------------------------------------------------------------
 
+
 // UPDATE comment
 router.put("/bars/:id/comments/:comment_id", middleware.checkCommentOwnership, function(req, res){
 
@@ -62,10 +65,12 @@ router.put("/bars/:id/comments/:comment_id", middleware.checkCommentOwnership, f
         if (err) {
             res.redirect("back");
         } else {
+            //req.flash("success", "Comment Updated!");
             res.redirect("/bars/" + req.params.id);
         }
     });
 }); //-------------------------------------------------------------------------
+
 
 // DELETE comment
 router.delete("/bars/:id/comments/:comment_id", middleware.checkCommentOwnership, function(req, res){
@@ -73,93 +78,11 @@ router.delete("/bars/:id/comments/:comment_id", middleware.checkCommentOwnership
         if (err) {
             res.redirect("back");
         } else {
+            //req.flash("success", "Comment Deleted!");
             res.redirect("/bars/" + req.params.id);
         }
     });
 }); //-------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//=============================================================================
-// our MIDDLEWARE functions ---------------------------------------------------
-// function isLoggedIn(req, res, next){
-//     if (req.isAuthenticated()) { return next(); }
-//
-//     res.redirect("/login");
-// }; //--------------------------------------------------------------------------
-//
-// function checkCommentOwnership(req, res, next) {
-//     // is user logged in?
-//     if (req.isAuthenticated()) {
-//         Comment.findById(req.params.comment_id, function(err, foundComment){
-//             if (err) {
-//                 console.log(err);
-//                 res.redirect("back"); // previous page
-//             } else {
-//                 // does user own bar post? compare:
-//                 console.log(foundComment.author.id); // mongoose object
-//                 console.log(req.user._id); // string
-//
-//                 if (foundComment.author.id.equals(req.user._id)) {
-//                     //res.render("bars/edit.ejs", { bar: foundBar });
-//                     next();
-//                 } else {
-//                     res.redirect("back"); // previous page
-//                 }
-//             }
-//         });
-//     } else {
-//         console.log("checkCommentOwnership() - YOU NEED TO BE LOGGED IN TO DO THAT!");
-//         res.redirect("back"); // previous page
-//     }
-// };
-//=============================================================================
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

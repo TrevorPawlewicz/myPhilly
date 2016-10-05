@@ -2,7 +2,7 @@
 var express    = require("express");
 var router     = express.Router(); // new instance of express Router
 var Bar        = require("../models/bar.js"); // include the model schema
-var middleware = require("../middleware/index.js"); // include our MIDDLEWARE
+var middleware = require("../middleware/middleware.js"); // include our MIDDLEWARE
 
 
 // INDEX: show ALL bars
@@ -17,6 +17,7 @@ router.get("/", function(req, res){
         }
     });
 }); //-------------------------------------------------------------------------
+
 
 // CREATE:
 router.post("/", middleware.isLoggedIn, function(req, res){
@@ -44,6 +45,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
     });
 }); //-------------------------------------------------------------------------
 
+
 // NEW: show the form to create a new bar
 router.get("/new", middleware.isLoggedIn, function(req, res){
     res.render("bars/new.ejs");
@@ -62,6 +64,7 @@ router.get("/:id", function(req, res){
     });
 }); //-------------------------------------------------------------------------
 
+
 // EDIT by ID
 router.get("/:id/edit", middleware.checkBarOwnership, function(req, res){
     // checkBarOwnership MIDDLEWARE is checked THEN:
@@ -70,6 +73,7 @@ router.get("/:id/edit", middleware.checkBarOwnership, function(req, res){
     });
 }); //-------------------------------------------------------------------------
 
+
 // UPDATE by ID
 router.put("/:id", middleware.checkBarOwnership, function(req, res){
     Bar.findByIdAndUpdate(req.params.id, req.body.bar, function(err, foundBar){
@@ -77,10 +81,12 @@ router.put("/:id", middleware.checkBarOwnership, function(req, res){
             console.log(err);
             res.redirect("/bars");
         } else {
+            req.flash("success", "Bar Updated!!");
             res.redirect("/bars/" + req.params.id);
         }
     });
 }); //-------------------------------------------------------------------------
+
 
 // DESTROY by ID
 router.delete("/:id", middleware.checkBarOwnership, function(req, res){
@@ -89,6 +95,7 @@ router.delete("/:id", middleware.checkBarOwnership, function(req, res){
             console.log(err);
             res.redirect("/bars");
         } else {
+            req.flash("success", "Bar Deleted!");
             res.redirect("/bars");
         }
     });
