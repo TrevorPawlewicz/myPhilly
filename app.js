@@ -17,7 +17,7 @@ var seedDB        = require("./seeds.js"); // for seeding the database with data
 // ROUTES - require the files, then app.use them below
 var commentRoutes = require("./routes/comments.js"),
     barRoutes     = require("./routes/bars.js"),
-    indexRoutes   = require("./routes/index.js");
+    indexRoutes   = require("./routes/index.js"); // AUTHENTICATION
 //-----------------------------------------------------------------------------
 
 
@@ -53,7 +53,7 @@ app.use(function(req, res, next){
     next(); // needed to move out of MIDDLEWARE
 });
 
-// associate routes with Express:-
+// associate routes with Express:
 app.use(indexRoutes);
 app.use("/bars", barRoutes); // adds "/bars" prefix to routes (get, post)
 app.use(commentRoutes);
