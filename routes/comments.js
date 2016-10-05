@@ -66,6 +66,17 @@ router.put("/bars/:id/comments/:comment_id", function(req, res){
     });
 });
 
+// DELETE comment
+router.delete("/bars/:id/comments/:comment_id", function(req, res){
+    Comment.findByIdAndRemove(req.params.comment_id, function(err){
+        if (err) {
+            res.redirect("back");
+        } else {
+            res.redirect("/bars/" + req.params.id);
+        }
+    });
+});
+
 
 
 // our MIDDLEWARE functions ---------------------------------------------------
