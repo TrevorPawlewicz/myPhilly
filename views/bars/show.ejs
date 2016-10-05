@@ -47,7 +47,7 @@
                 </div>
 
                 <hr>
-                <!-- comments start -->
+                <!-- _____________________comments start___________________ -->
                 <% bar.comments.forEach(function(comment){ %>
                     <div class="row">
                         <div class="col-md-12">
@@ -56,10 +56,14 @@
                             <p>
                                 <%= comment.text %>
                             </p>
+                            <a class="btn btn-warning btn-xs"
+                                href="/bars/<%= bar._id %>/comments/<%= comment._id%>/edit">
+                                Edit
+                            </a>
                         </div>
                     </div>
                 <% }); %>
-                <!-- comments end -->
+                <!-- ____________________comments end______________________ -->
             </div>
 
         </div>

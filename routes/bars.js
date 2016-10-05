@@ -1,3 +1,4 @@
+// routes/bars.js
 var express = require("express");
 var router  = express.Router(); // new instance of express Router in our router
 var Bar     = require("../models/bar.js"); // include the model schema

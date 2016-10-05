@@ -43,6 +43,31 @@ router.post("/bars/:id/comments", isLoggedIn, function(req, res){
 }); //-------------------------------------------------------------------------
 
 
+// EDIT comment by Id
+router.get("/bars/:id/comments/:comment_id/edit", function(req, res){
+    Comment.findById(req.params.comment_id, function(err, foundComment){
+        if (err) {
+            res.redirect("back");
+        } else {
+            res.render("comments/edit", {bar_id: req.params.id, comment: foundComment});
+        }
+    });
+});
+
+// UPDATE comment
+router.put("/bars/:id/comments/:comment_id", function(req, res){
+
+    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment.text, function(err, updatedComment){
+        if (err) {
+            res.redirect("back");
+        } else {
+            res.redirect("/bars/" + req.params.id);
+        }
+    });
+});
+
+
+
 // our MIDDLEWARE functions ---------------------------------------------------
 function isLoggedIn(req, res, next){
     if (req.isAuthenticated()) { return next(); }
