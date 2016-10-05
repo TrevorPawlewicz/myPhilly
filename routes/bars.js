@@ -1,8 +1,8 @@
 // routes/bars.js
-var express = require("express");
-var router  = express.Router(); // new instance of express Router in our router
-var Bar     = require("../models/bar.js"); // include the model schema
-var Comment = require("../models/comment.js"); // include the model schema
+var express    = require("express");
+var router     = express.Router(); // new instance of express Router
+var Bar        = require("../models/bar.js"); // include the model schema
+var middleware = require("../middleware/index.js"); // include our MIDDLEWARE
 
 
 // INDEX: show ALL bars
@@ -19,7 +19,7 @@ router.get("/", function(req, res){
 }); //-------------------------------------------------------------------------
 
 // CREATE:
-router.post("/", isLoggedIn, function(req, res){
+router.post("/", middleware.isLoggedIn, function(req, res){
     // get data from FORM: req.body
     var name = req.body.name; // from new.ejs FORM "name"
     var image = req.body.image; // from new.ejs FORM "image"
@@ -45,7 +45,7 @@ router.post("/", isLoggedIn, function(req, res){
 }); //-------------------------------------------------------------------------
 
 // NEW: show the form to create a new bar
-router.get("/new", isLoggedIn, function(req, res){
+router.get("/new", middleware.isLoggedIn, function(req, res){
     res.render("bars/new.ejs");
 }); //-------------------------------------------------------------------------
 
@@ -63,7 +63,7 @@ router.get("/:id", function(req, res){
 }); //-------------------------------------------------------------------------
 
 // EDIT by ID
-router.get("/:id/edit", checkBarOwnership, function(req, res){
+router.get("/:id/edit", middleware.checkBarOwnership, function(req, res){
     // checkBarOwnership MIDDLEWARE is checked THEN:
     Bar.findById(req.params.id, function(err, foundBar){
         res.render("bars/edit.ejs", { bar: foundBar });
@@ -71,7 +71,7 @@ router.get("/:id/edit", checkBarOwnership, function(req, res){
 }); //-------------------------------------------------------------------------
 
 // UPDATE by ID
-router.put("/:id", checkBarOwnership, function(req, res){
+router.put("/:id", middleware.checkBarOwnership, function(req, res){
     Bar.findByIdAndUpdate(req.params.id, req.body.bar, function(err, foundBar){
         if (err) {
             console.log(err);
@@ -83,7 +83,7 @@ router.put("/:id", checkBarOwnership, function(req, res){
 }); //-------------------------------------------------------------------------
 
 // DESTROY by ID
-router.delete("/:id", checkBarOwnership, function(req, res){
+router.delete("/:id", middleware.checkBarOwnership, function(req, res){
     Bar.findByIdAndRemove(req.params.id, function(err){
         if (err) {
             console.log(err);
@@ -94,41 +94,6 @@ router.delete("/:id", checkBarOwnership, function(req, res){
     });
 }); //-------------------------------------------------------------------------
 
-
-//=============================================================================
-// our MIDDLEWARE functions ---------------------------------------------------
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) { return next(); }
-
-    res.redirect("/login");
-}; //--------------------------------------------------------------------------
-
-function checkBarOwnership(req, res, next) {
-    // is user logged in?
-    if (req.isAuthenticated()) {
-        Bar.findById(req.params.id, function(err, foundBar){
-            if (err) {
-                console.log(err);
-                res.redirect("back"); // previous page
-            } else {
-                // does user own bar post? compare:
-                console.log(foundBar.author.id); // mongoose object
-                console.log(req.user._id); // string
-
-                if (foundBar.author.id.equals(req.user._id)) {
-                    //res.render("bars/edit.ejs", { bar: foundBar });
-                    next();
-                } else {
-                    res.redirect("back"); // previous page
-                }
-            }
-        });
-    } else {
-        console.log("checkBarOwnership() - YOU NEED TO BE LOGGED IN TO DO THAT!");
-        res.redirect("back"); // previous page
-    }
-};
-//=============================================================================
 
 //-----------------------------------------------------------------------------
 // export (return) our router for app.js import

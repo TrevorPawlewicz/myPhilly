@@ -2,12 +2,13 @@ var express = require("express");
 var router  = express.Router({mergeParams: true}); // bars + comments get merged
 var Bar     = require("../models/bar.js"); // include the model schema
 var Comment = require("../models/comment.js"); // include the model schema
+var middleware = require("../middleware/index.js"); // include our MIDDLEWARE
 
 // ============================================================================
 // COMMENT ROUTES
 //---------------
 // NEW (GET)                         MIDDLEWARE
-router.get("/bars/:id/comments/new", isLoggedIn, function(req, res){
+router.get("/bars/:id/comments/new", middleware.isLoggedIn, function(req, res){
     Bar.findById(req.params.id, function(err, bar){
         if (err) {
             console.log(err);
@@ -19,7 +20,7 @@ router.get("/bars/:id/comments/new", isLoggedIn, function(req, res){
 }); //-------------------------------------------------------------------------
 
 // CREATE (POST) comment          MIDDLEWARE
-router.post("/bars/:id/comments", isLoggedIn, function(req, res){
+router.post("/bars/:id/comments", middleware.isLoggedIn, function(req, res){
     Bar.findById(req.params.id, function(err, bar){
         if (err) {
             console.log(err);
@@ -44,7 +45,7 @@ router.post("/bars/:id/comments", isLoggedIn, function(req, res){
 
 
 // EDIT comment by Id
-router.get("/bars/:id/comments/:comment_id/edit", checkCommentOwnership, function(req, res){
+router.get("/bars/:id/comments/:comment_id/edit", middleware.checkCommentOwnership, function(req, res){
     Comment.findById(req.params.comment_id, function(err, foundComment){
         if (err) {
             res.redirect("back");
@@ -55,7 +56,7 @@ router.get("/bars/:id/comments/:comment_id/edit", checkCommentOwnership, functio
 }); //-------------------------------------------------------------------------
 
 // UPDATE comment
-router.put("/bars/:id/comments/:comment_id", checkCommentOwnership, function(req, res){
+router.put("/bars/:id/comments/:comment_id", middleware.checkCommentOwnership, function(req, res){
 
     Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment){
         if (err) {
@@ -67,7 +68,7 @@ router.put("/bars/:id/comments/:comment_id", checkCommentOwnership, function(req
 }); //-------------------------------------------------------------------------
 
 // DELETE comment
-router.delete("/bars/:id/comments/:comment_id", checkCommentOwnership, function(req, res){
+router.delete("/bars/:id/comments/:comment_id", middleware.checkCommentOwnership, function(req, res){
     Comment.findByIdAndRemove(req.params.comment_id, function(err){
         if (err) {
             res.redirect("back");
@@ -96,37 +97,37 @@ router.delete("/bars/:id/comments/:comment_id", checkCommentOwnership, function(
 
 //=============================================================================
 // our MIDDLEWARE functions ---------------------------------------------------
-function isLoggedIn(req, res, next){
-    if (req.isAuthenticated()) { return next(); }
-
-    res.redirect("/login");
-}; //--------------------------------------------------------------------------
-
-function checkCommentOwnership(req, res, next) {
-    // is user logged in?
-    if (req.isAuthenticated()) {
-        Comment.findById(req.params.comment_id, function(err, foundComment){
-            if (err) {
-                console.log(err);
-                res.redirect("back"); // previous page
-            } else {
-                // does user own bar post? compare:
-                console.log(foundComment.author.id); // mongoose object
-                console.log(req.user._id); // string
-
-                if (foundComment.author.id.equals(req.user._id)) {
-                    //res.render("bars/edit.ejs", { bar: foundBar });
-                    next();
-                } else {
-                    res.redirect("back"); // previous page
-                }
-            }
-        });
-    } else {
-        console.log("checkCommentOwnership() - YOU NEED TO BE LOGGED IN TO DO THAT!");
-        res.redirect("back"); // previous page
-    }
-};
+// function isLoggedIn(req, res, next){
+//     if (req.isAuthenticated()) { return next(); }
+//
+//     res.redirect("/login");
+// }; //--------------------------------------------------------------------------
+//
+// function checkCommentOwnership(req, res, next) {
+//     // is user logged in?
+//     if (req.isAuthenticated()) {
+//         Comment.findById(req.params.comment_id, function(err, foundComment){
+//             if (err) {
+//                 console.log(err);
+//                 res.redirect("back"); // previous page
+//             } else {
+//                 // does user own bar post? compare:
+//                 console.log(foundComment.author.id); // mongoose object
+//                 console.log(req.user._id); // string
+//
+//                 if (foundComment.author.id.equals(req.user._id)) {
+//                     //res.render("bars/edit.ejs", { bar: foundBar });
+//                     next();
+//                 } else {
+//                     res.redirect("back"); // previous page
+//                 }
+//             }
+//         });
+//     } else {
+//         console.log("checkCommentOwnership() - YOU NEED TO BE LOGGED IN TO DO THAT!");
+//         res.redirect("back"); // previous page
+//     }
+// };
 //=============================================================================
 
 
