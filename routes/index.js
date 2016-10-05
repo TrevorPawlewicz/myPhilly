@@ -1,7 +1,8 @@
-var express  = require("express");
-var router   = express.Router(); // new instance of express Router in our router
-var passport = require("passport");
-var User     = require("../models/user.js"); // include the model schema
+var express    = require("express");
+var router     = express.Router(); //new instance of express Router in our router
+var passport   = require("passport");
+var User       = require("../models/user.js"); // include the model schema
+
 
 // Root Route
 router.get("/", function(req, res){
@@ -16,7 +17,8 @@ router.get("/", function(req, res){
 // SHOW (GET) the form
 router.get("/register", function(req, res){
     res.render("register.ejs");
-});
+}); //-------------------------------------------------------------------------
+
 
 // handle (POST) Sign Up logic:
 router.post("/register", function(req, res){
@@ -39,6 +41,7 @@ router.get("/login", function(req, res){
     res.render("login.ejs");
 }); //-------------------------------------------------------------------------
 
+
 // handle (POST) Login with "passport-local-mongoose" MIDDLEWARE:
 router.post("/login", passport.authenticate("local",
     {   // user is assumed to exist
@@ -47,24 +50,18 @@ router.post("/login", passport.authenticate("local",
     }),
     function(req, res){
         // not really needed
-}); //------------------------------------------------------------------------
+        console.log("something really went wrong :(");
+    }
+); //------------------------------------------------------------------------
 
 
 // (GET) Logout logic
 router.get("/logout", function(req, res){
     req.logout();
+    req.flash("success", "Logged You Out!");
     //res.redirect("/");
     res.redirect("/bars");
 }); //------------------------------------------------------------------------
-
-
-// our MIDDLEWARE functions --------------------------------------------------
-function isLoggedIn(req, res, next){
-    if (req.isAuthenticated()) { return next(); }
-
-    res.redirect("/login");
-}; //--------------------------------------------------------------------------
-
 
 
 //-----------------------------------------------------------------------------

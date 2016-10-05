@@ -5,8 +5,11 @@ var middlewareObject = {};
 
 
 middlewareObject.isLoggedIn = function(req, res, next) {
-    if (req.isAuthenticated()) { return next(); }
-
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    //  flash( key,      value) to be passed       
+    req.flash("error", "Please Login First!");
     res.redirect("/login");
 }; //--------------------------------------------------------------------------
 

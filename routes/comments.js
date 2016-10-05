@@ -1,7 +1,7 @@
-var express = require("express");
-var router  = express.Router({mergeParams: true}); // bars + comments get merged
-var Bar     = require("../models/bar.js"); // include the model schema
-var Comment = require("../models/comment.js"); // include the model schema
+var express    = require("express");
+var router     = express.Router({mergeParams: true}); //bars + comments get merged
+var Bar        = require("../models/bar.js"); // include the model schema
+var Comment    = require("../models/comment.js"); // include the model schema
 var middleware = require("../middleware/index.js"); // include our MIDDLEWARE
 
 // ============================================================================
