@@ -29,7 +29,7 @@ router.post("/register", function(req, res){
             res.render("register.ejs");
         } else {
             passport.authenticate("local")(req, res, function(){
-                req.flash("success", "Welcome " + user.username + "!");
+                req.flash("success", "Welcome " + newUser.username + "!");
                 res.redirect("/bars");
             });
         }

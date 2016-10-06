@@ -3,6 +3,7 @@ var router     = express.Router({mergeParams: true}); //bars + comments get merg
 var Bar        = require("../models/bar.js"); // include the model schema
 var Comment    = require("../models/comment.js"); // include the model schema
 var middleware = require("../middleware/middleware.js"); // include our MIDDLEWARE
+var moment     = require("moment"); // for time & date display
 
 // ============================================================================
 // COMMENT ROUTES
@@ -32,6 +33,10 @@ router.post("/bars/:id/comments", middleware.isLoggedIn, function(req, res){
 
                     console.log(err);
                 } else {
+                    // date created (with moment.js):
+                    var commentDate = moment().format("MMMM Do YYYY, h:mm a");
+                    comment.date = commentDate;
+
                     comment.author.id = req.user._id;
                     comment.author.username = req.user.username;
                     comment.save();

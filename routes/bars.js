@@ -3,6 +3,7 @@ var express    = require("express");
 var router     = express.Router(); // new instance of express Router
 var Bar        = require("../models/bar.js"); // include the model schema
 var middleware = require("../middleware/middleware.js"); // include our MIDDLEWARE
+var moment     = require("moment"); // for time & date display
 
 
 // INDEX: show ALL bars

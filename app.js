@@ -6,6 +6,7 @@ var flash          = require("connect-flash"); // messages
 var passport       = require("passport");
 var LocalStrategy  = require("passport-local");
 var methodOverride = require("method-override");
+var moment         = require("moment");
 
 //  Schemas                  ./ = current directory
 var Bar           = require("./models/bar.js");
