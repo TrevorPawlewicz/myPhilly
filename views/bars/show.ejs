@@ -26,6 +26,7 @@
                     <p>Submitted by
                         <strong><em><%= bar.author.username %></em></strong>
                     </p>
+                    <span class="pull-right"><%= bar.date %></span>
 
                     <!-- ___________EDIT and DELETE buttons________________ -->
                     <% if (currentUser && bar.author.id.equals(currentUser._id)) { %>
@@ -67,7 +68,7 @@
                                     <input type="submit" class="btn btn-xs btn-danger" value="Delete">
                                 </form>
                             <% } %>
-
+                            <hr>
                         </div>
                     </div>
                 <% }); %>

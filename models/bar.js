@@ -18,6 +18,7 @@ var barSchema = new mongoose.Schema({
             ref: "Comment"
         }
     ],
+    date: String,
     cost: String,
     rating: String
 });

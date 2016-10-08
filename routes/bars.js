@@ -4,6 +4,8 @@ var router     = express.Router(); // new instance of express Router
 var Bar        = require("../models/bar.js"); // include the model schema
 var middleware = require("../middleware/middleware.js"); // include our MIDDLEWARE
 var moment     = require("moment"); // for time & date display
+//var multer     = require("multer"); // file image upload
+//var imageUpload = multer({dest: "./public/images/uploads"});
 
 
 // INDEX: show ALL bars
@@ -21,7 +23,8 @@ router.get("/", function(req, res){
 
 
 // CREATE:
-router.post("/", middleware.isLoggedIn, function(req, res){
+ router.post("/", middleware.isLoggedIn, function(req, res){
+//router.post("/", middleware.isLoggedIn, upload.single("image") , function(req, res){
     // get data from FORM: req.body
     var name = req.body.name; // from new.ejs FORM "name"
     var image = req.body.image; // from new.ejs FORM "image"
@@ -30,10 +33,11 @@ router.post("/", middleware.isLoggedIn, function(req, res){
         id: req.user._id,
         username: req.user.username
     };
+    var creationDate = moment().format("MMMM Do YYYY, h:mm a");
     //var cost = ;
     //var rating = ;
 
-    var newBar = {name: name, image: image, description: desc, author: author};
+    var newBar = {name: name, image: image, description: desc, author: author, date: creationDate};
 
     // create a new bar and save to the database:
     Bar.create(newBar, function(err, newlyCreated){

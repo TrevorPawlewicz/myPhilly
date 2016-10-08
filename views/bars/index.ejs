@@ -1,42 +1,45 @@
 <% include ../partials/header %>
 <!-- ______________________________________________________________________ -->
 
-<h1>bars.ejs</h1>
+<h1>bars/index.ejs</h1>
 
 
-<!-- header text -->
+
 <div class="container">
+    <!-- header text -->
     <header class="jumbotron">
         <div class="container">
-            <h2>myPhilly Bars!</h2>
-            <p>View my favorite philly bars</p>
+            <h2>myPhilly Bars!  <i class="fa fa-bell-o"></i></h2>
+            <p>View My Favorite Philadelphia Bars!</p>
             <p>
                 <a href="/bars/new" class="btn btn-primary btn-large">Add New Bar</a>
             </p>
         </div>
     </header>
-</div>
 
 
-<!-- image thumnails -->
-<div class="row text-center" style="display:flex; flex-wrap:wrap;">
+    <!-- image thumnails -->
+    <div class="row text-center" style="display:flex; flex-wrap:wrap;">
 
-    <% bars.forEach(function(bar){ %>
-        <div class="col-md-3 col-sm-6">
-            <div class="thumbnail">
-                <img src="<%= bar.image %>">
-                <div class="caption">
-                    <h4><%= bar.name %></h4>
+        <% bars.forEach(function(bar){ %>
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                    <img src="<%= bar.image %>">
+                    <div class="caption">
+                        <h4><%= bar.name %></h4>
+                    </div>
+                    <p>
+                        <a href="/bars/<%= bar._id %>" class="btn btn-primary">
+                            More Info
+                        </a>
+                    </p>
                 </div>
-                <p>
-                    <a href="/bars/<%= bar._id %>" class="btn btn-primary">More Info</a>
-                </p>
             </div>
-        </div>
-    <% }); %>
+        <% }); %>
 
-</div>
+    </div>
 
+</div> <!-- .container -->
 
 
 

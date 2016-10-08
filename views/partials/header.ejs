@@ -15,7 +15,7 @@
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a href="/" class="navbar-brand">myPhilly</a>
+                <a href="/" class="navbar-brand">myPhilly <i class="fa fa-bell-o"></i></a>
 
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar">
                     <span class="sr-only">Toggle navigation</span>
@@ -33,7 +33,9 @@
                         <li><a href="/register">Sign Up</a></li>
                     <% } else { %>
                         <li>
-                            <a href="#">Signed in as <%= currentUser.username %></a>
+                            <a href="#"><i class="fa fa-user"></i>
+                                Signed in as <%= currentUser.username %>
+                            </a>
                         </li>
                         <li><a href="/logout">Logout</a></li>
                     <% } %>
