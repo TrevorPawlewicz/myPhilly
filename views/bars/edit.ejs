@@ -6,9 +6,9 @@
 
 <div class="container">
     <div class="row">
-        <h1 style="text-align: center;">Edit <%= bar.name %></h1>
+        <h1 class="h1-center">Edit <%= bar.name %></h1>
 
-        <div style="width:30%; margin: 30px auto;">
+        <div class="header-width-30">
             <!--                              method-override          -->
             <form action="/bars/<%= bar._id %>?_method=PUT" method="POST">
                 <div class="form-group">

@@ -3,9 +3,17 @@ body {
     font-family: 'Varela Round', sans-serif;
     /*font-family: 'Bangers', cursive;*/
     /*font-family: 'Monoton', cursive;*/
-    /*                            top     bottom */
-    background: linear-gradient(#7FFF00, #00FFFF);
     padding: 60px 0 0 0; /* for navbar-fixed-top */
+
+    background: #BE93C5; /* fallback for old browsers */
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to left, #BE93C5 , #7BC6CC);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to left, #BE93C5 , #7BC6CC);
+}
+.div-thumb-style {
+    display: flex;
+    flex-wrap: wrap;
 }
 .thumbnail img {
     width: 100%;
@@ -21,12 +29,20 @@ body {
     display: inline;
 }
 
+.h1-center {
+    text-align: center;
+}
+.header-width-30 {
+    width: 30%;
+    margin: 30px auto;
+}
 
 
 
 
+#comments-new, #bars-new {
+    /*background: linear-gradient(to left, #0066ff , #6600ff);*/
 
-
-#comments-new {
-    background: red;
+    /* text-shadow: h-shadow v-shadow blur-radius color|none|initial|inherit; */
+    text-shadow: 1px 1px 2px #BE93C5;
 }

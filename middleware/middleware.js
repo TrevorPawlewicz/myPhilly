@@ -56,7 +56,6 @@ middlewareObject.checkCommentOwnership = function(req, res, next) {
                 console.log(req.user._id); // string
 
                 if (foundComment.author.id.equals(req.user._id)) {
-                    req.flash("success", "Comment Deleted!");
                     next();
                 } else {
                     req.flash("error", "You Do Not Have Permission To Do That, Son!");

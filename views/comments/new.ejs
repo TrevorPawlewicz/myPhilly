@@ -1,13 +1,13 @@
 <% include ../partials/header %>
 <!-- _________________comments/new.ejs_____________________________________ -->
 
-<h1>Comments - new.ejs</h1>
+<!-- <h1>Comments - new.ejs</h1> -->
 
 <div id="comments-new" class="container">
     <div class="row">
-        <h1 style="text-align: center;">Add new comment to <%= bar.name %></h1>
+        <h1 class="h1-center">Add new comment to <%= bar.name %></h1>
 
-        <div style="width:30%; margin: 30px auto;">
+        <div class="header-width-30">
             <form action="/bars/<%= bar._id %>/comments" method="POST">
 
                 <div class="form-group">
@@ -20,7 +20,7 @@
 
             </form>
 
-            <a href="/bars">Go Back</a>
+            <a href="/bars" class="btn btn-xs btn-warning">Go Back</a>
         </div>
 
     </div>

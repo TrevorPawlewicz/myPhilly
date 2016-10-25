@@ -15,7 +15,7 @@ router.get("/", function(req, res){
         if (err) {
             console.log(err);
         } else {
-            //                 {name we give it: data pased in}
+            //                 {name we give it: data passed in}
             res.render("bars/index.ejs", { bars: allBarsFound });
         }
     });
@@ -74,10 +74,13 @@ router.get("/:id", function(req, res){
 router.get("/:id/edit", middleware.checkBarOwnership, function(req, res){
     // checkBarOwnership MIDDLEWARE is checked THEN:
     Bar.findById(req.params.id, function(err, foundBar){
-        res.render("bars/edit.ejs", { bar: foundBar });
+        if (err) {
+            req.flash('error', 'Cannot Find Specified Item!');
+        } else {
+            res.render("bars/edit.ejs", { bar: foundBar });
+        }
     });
 }); //-------------------------------------------------------------------------
-
 
 // UPDATE by ID
 router.put("/:id", middleware.checkBarOwnership, function(req, res){
@@ -91,7 +94,6 @@ router.put("/:id", middleware.checkBarOwnership, function(req, res){
         }
     });
 }); //-------------------------------------------------------------------------
-
 
 // DESTROY by ID
 router.delete("/:id", middleware.checkBarOwnership, function(req, res){
