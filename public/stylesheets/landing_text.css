@@ -1,7 +1,6 @@
 body, html {
     width: 100%;
     height: 100%;
-    /*font-family: "Lato";*/
     color: white;
 }
 
@@ -9,7 +8,6 @@ h1 {
     font-weight: 700;
     font-size: 5em;
 }
-
 
 .content {
     padding-top: 20%;
@@ -32,6 +30,7 @@ hr {
     border-top: 1px solid #f8f8f8;
     border-bottom: 1px solid rgba(0,0,0,0.2);
 }
+
 .btn-info {
     color: #00008B;
 }
