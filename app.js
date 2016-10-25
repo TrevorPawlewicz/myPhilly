@@ -28,11 +28,11 @@ var PORT = process.env.PORT || 3000;
 //mongoose.connect("mongodb://localhost/my_philly"); // localhost:3000 database
 // ------------v
 // from commandline create env. var: export DATABASE_URL=mongodb://localhost/my_philly
-// to create OUR enviornment variable "DATABASE_URL"
+// to create OUR enviornment variable "DATABASE_URL" (use in Heroku)
 var url = process.env.DATABASE_URL || 'mongodb://localhost/my_philly';
 console.log("-----> DATABASE_URL = " + process.env.DATABASE_URL);
 mongoose.connect(url);
-// Heroku env. var set at its website
+// Heroku env. var set at its website = Settings
 
 
 app.use(bodyParser.urlencoded({extended: true}));
