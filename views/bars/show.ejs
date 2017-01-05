@@ -20,13 +20,15 @@
             <div class="thumbnail">
                 <img class="img-responsive" src="<%= bar.image%>"/>
                 <div class="caption-full">
+
                     <h5 class="pull-right">Avg. cost: $<%= bar.cost %></h5>
+
                     <h3><a><%= bar.name %></a></h3>
                     <p><%= bar.description %></p>
                     <p>Submitted by
                         <strong><em><%= bar.author.username %></em></strong>
+                        <span class="pull-right"><%= bar.date %></span>
                     </p>
-                    <span class="pull-right"><%= bar.date %></span>
 
                     <!-- ___________EDIT and DELETE buttons________________ -->
                     <% if (currentUser && bar.author.id.equals(currentUser._id)) { %>
