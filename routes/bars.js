@@ -34,10 +34,17 @@ router.get("/", function(req, res){
         username: req.user.username
     };
     var creationDate = moment().format("MMMM Do YYYY, h:mm a");
-    //var cost = ;
+    var cost = req.body.cost;
     //var rating = ;
 
-    var newBar = {name: name, image: image, description: desc, author: author, date: creationDate};
+    var newBar = {
+        name: name,
+        image: image,
+        description: desc,
+        author: author,
+        cost: cost, 
+        date: creationDate
+    };
 
     // create a new bar and save to the database:
     Bar.create(newBar, function(err, newlyCreated){
